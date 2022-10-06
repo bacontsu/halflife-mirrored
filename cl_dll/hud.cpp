@@ -379,6 +379,16 @@ void CHud::Init()
 	m_Menu.Init();
 
 	MsgFunc_ResetHUD(0, 0, NULL);
+
+	// check if the menu is already on fullscreen
+	auto brd_window = BRD_GetWindow();
+	if (brd_window)
+	{
+		if (SDL_GetWindowFlags(brd_window) & SDL_WINDOW_FULLSCREEN)
+		{
+			hasAlreadyFullscreen = true;
+		}
+	}
 }
 
 // CHud destructor
@@ -471,14 +481,13 @@ void CHud::VidInit()
 	auto brd_window = BRD_GetWindow();
 	if (brd_window)
 	{
-		if (SDL_GetWindowFlags(brd_window) & SDL_WINDOW_FULLSCREEN && CVAR_GET_FLOAT("r_borderless") == 0)
+		if ((SDL_GetWindowFlags(brd_window) & SDL_WINDOW_FULLSCREEN && CVAR_GET_FLOAT("r_borderless") == 0) || hasAlreadyFullscreen)
 		{
 			gEngfuncs.pfnClientCmd("escape\n");
-			if (MessageBox(
-					NULL,
-					"This mod only works on windowed mode, use r_borderless to toggle between windowed/fullscreen mode.\n",
+			if (SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,
 					"Half-Life: Mirrored",
-					MB_ICONERROR | MB_OK | MB_DEFBUTTON2))
+					"This mod only works on windowed mode, use r_borderless to toggle between windowed/fullscreen mode.\n",
+					NULL))
 				;
 			{
 				exit(-1);
