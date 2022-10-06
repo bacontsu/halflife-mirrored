@@ -933,10 +933,10 @@ void InitInput()
 	gEngfuncs.pfnAddCommand("-lookdown", IN_LookdownUp);
 	gEngfuncs.pfnAddCommand("+strafe", IN_StrafeDown);
 	gEngfuncs.pfnAddCommand("-strafe", IN_StrafeUp);
-	gEngfuncs.pfnAddCommand("+moveleft", IN_MoveleftDown);
-	gEngfuncs.pfnAddCommand("-moveleft", IN_MoveleftUp);
-	gEngfuncs.pfnAddCommand("+moveright", IN_MoverightDown);
-	gEngfuncs.pfnAddCommand("-moveright", IN_MoverightUp);
+	gEngfuncs.pfnAddCommand("+moveleft", IN_MoverightDown);
+	gEngfuncs.pfnAddCommand("-moveleft", IN_MoverightUp);
+	gEngfuncs.pfnAddCommand("+moveright", IN_MoveleftDown);
+	gEngfuncs.pfnAddCommand("-moveright", IN_MoveleftUp);
 	gEngfuncs.pfnAddCommand("+speed", IN_SpeedDown);
 	gEngfuncs.pfnAddCommand("-speed", IN_SpeedUp);
 	gEngfuncs.pfnAddCommand("+attack", IN_AttackDown);

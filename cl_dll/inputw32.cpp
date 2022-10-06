@@ -199,7 +199,7 @@ Point GetMousePosition()
 	GetCursorPos(&mouse_pos);
 
 	return {
-		static_cast<int>(mouse_pos.x),
+		static_cast<int>(ScreenWidth - mouse_pos.x),
 		static_cast<int>(mouse_pos.y)};
 }
 
