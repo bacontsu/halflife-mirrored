@@ -30,6 +30,9 @@
 #include "cl_dll.h"
 #include "ammo.h"
 
+
+#include <SDL2/SDL.h>
+
 #define DHN_DRAWZERO 1
 #define DHN_2DIGITS 2
 #define DHN_3DIGITS 4
@@ -518,6 +521,11 @@ public:
 	int GetHudNumberWidth(int number, int width, int flags);
 	int DrawHudNumberReverse(int x, int y, int number, int flags, int r, int g, int b);
 
+	// Borderless Things
+	// BOOL brd_isFullscreen;
+	SDL_Window* BRD_GetWindow();
+	void BRD_SetBorderless(SDL_Window* brd_windowArg);
+
 	bool HasWeapon(int id) const
 	{
 		return (m_iWeaponBits & (1ULL << id)) != 0;
@@ -615,3 +623,4 @@ extern int g_iTeamNumber;
 extern int g_iUser1;
 extern int g_iUser2;
 extern int g_iUser3;
+

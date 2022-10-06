@@ -30,6 +30,9 @@
 #include "demo_api.h"
 #include "vgui_ScorePanel.h"
 
+#include "PlatformHeaders.h"
+
+
 hud_player_info_t g_PlayerInfoList[MAX_PLAYERS_HUD + 1];	// player info from the engine
 extra_player_info_t g_PlayerExtraInfo[MAX_PLAYERS_HUD + 1]; // additional player info sent directly to the client dll
 
@@ -323,6 +326,9 @@ void CHud::Init()
 
 	CVAR_CREATE("cl_righthand", "1", FCVAR_ARCHIVE);
 
+	// Borderless Things
+	CVAR_CREATE("r_borderless", "1", FCVAR_ARCHIVE);
+
 	m_iLogo = 0;
 	m_iFOV = 0;
 
@@ -412,6 +418,37 @@ int CHud::GetSpriteIndex(const char* SpriteName)
 	return -1; // invalid sprite
 }
 
+void CHud::BRD_SetBorderless(SDL_Window* brd_windowArg)
+{
+	SDL_DisplayMode dm;
+	int weg, heg;
+	if (SDL_GetDesktopDisplayMode(0, &dm) != 0)
+	{
+		gEngfuncs.Con_Printf("\nCould not switch to borderless mode!! Err: %s", SDL_GetError());
+		return;
+	}
+	weg = dm.w;
+	heg = dm.h;
+	// gEngfuncs.pfnClientCmd("r_borderless 1\n");
+	// gEngfuncs.pfnClientCmd("r_ignoreborderless 1\n");
+	SDL_SetWindowFullscreen(brd_windowArg, SDL_WINDOW_FULLSCREEN_DESKTOP);
+	SDL_SetWindowSize(brd_windowArg, weg, heg);
+	SDL_SetWindowBordered(brd_windowArg, SDL_FALSE);
+	SDL_RaiseWindow(brd_windowArg);
+	gEngfuncs.Con_Printf("\nBorderless mode initialised.\n");
+}
+
+SDL_Window* CHud::BRD_GetWindow()
+{
+	for (Uint32 id = 0; id < UINT32_MAX; ++id)
+	{
+		auto brd_window = SDL_GetWindowFromID(id);
+		if (brd_window)
+			return brd_window;
+	}
+	return nullptr;
+}
+
 void CHud::VidInit()
 {
 	m_scrinfo.iSize = sizeof(m_scrinfo);
@@ -429,6 +466,35 @@ void CHud::VidInit()
 		m_iRes = 320;
 	else
 		m_iRes = 640;
+
+
+	auto brd_window = BRD_GetWindow();
+	if (brd_window)
+	{
+		if (SDL_GetWindowFlags(brd_window) & SDL_WINDOW_FULLSCREEN && CVAR_GET_FLOAT("r_borderless") == 0)
+		{
+			gEngfuncs.pfnClientCmd("escape\n");
+			if (MessageBox(
+					NULL,
+					"This mod only works on windowed mode, use r_borderless to toggle between windowed/fullscreen mode.\n",
+					"Half-Life: Mirrored",
+					MB_ICONERROR | MB_OK | MB_DEFBUTTON2))
+				;
+			{
+				exit(-1);
+			}
+		}
+	}
+
+	if (CVAR_GET_FLOAT("r_borderless") == 1)
+	{
+		auto brd_window = BRD_GetWindow();
+		if (brd_window)
+		{
+			if (!(SDL_GetWindowFlags(brd_window) & SDL_WINDOW_FULLSCREEN))
+				BRD_SetBorderless(BRD_GetWindow());
+		}
+	}
 
 	// Only load this once
 	if (!m_pSpriteList)
