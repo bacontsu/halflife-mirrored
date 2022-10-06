@@ -1,12 +1,6 @@
-//========= Copyright © 2004-2008, Raven City Team, All rights reserved. ============//
-//																					 //
-// Purpose:																			 //
-//																					 //
-// $NoKeywords: $																	 //
-//===================================================================================//
-// Original code by Ryokeen, modified by Highlander.
+// by Bacontsu, based on Color Correction tutorial from https://hlfx.ru
 
-class CColorCor
+class CFlipScreen
 {
 public:
 	void InitScreen(void);
@@ -15,4 +9,4 @@ public:
 	unsigned int tex;
 };
 
-extern CColorCor gFlipScene;
+extern CFlipScreen gFlipScene;
