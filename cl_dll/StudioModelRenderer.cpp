@@ -21,6 +21,8 @@
 #include "StudioModelRenderer.h"
 #include "GameStudioModelRenderer.h"
 
+#include "flipview.h"
+
 extern cvar_t* tfc_newmodels;
 
 extern extra_player_info_t g_PlayerExtraInfo[MAX_PLAYERS_HUD + 1];
@@ -558,6 +560,13 @@ void CStudioModelRenderer::StudioSetUpTransform(bool trivial_accept)
 	(*m_protationmatrix)[0][3] = modelpos[0];
 	(*m_protationmatrix)[1][3] = modelpos[1];
 	(*m_protationmatrix)[2][3] = modelpos[2];
+
+	if (CVAR_GET_FLOAT("cl_righthand") == 1 && m_pCurrentEntity == gEngfuncs.GetViewModel())
+	{
+		(*m_protationmatrix)[0][1] *= -1;
+		(*m_protationmatrix)[1][1] *= -1;
+		(*m_protationmatrix)[2][1] *= -1;
+	}
 }
 
 
@@ -1616,6 +1625,15 @@ void CStudioModelRenderer::StudioRenderModel()
 	else
 	{
 		StudioRenderFinal();
+	}
+
+	// Bacontsu - flip screen after drawing viewmodel, here (credit to Admer456, for this hackery to draw stuff(s) after the viewmodel)
+	if (m_pCurrentEntity == gEngfuncs.GetViewModel())
+	{
+		auto view = gEngfuncs.GetViewModel();
+
+		if (view && view->model)
+			gFlipScene.DrawColorCor();
 	}
 }
 
