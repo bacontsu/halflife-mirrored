@@ -22,6 +22,7 @@
 #include "cl_util.h"
 #include "netadr.h"
 #include "interface.h"
+#include "flipview.h"
 //#include "vgui_schememanager.h"
 
 #include "pm_shared.h"
@@ -168,6 +169,7 @@ void DLLEXPORT HUD_Init()
 	InitInput();
 	gHUD.Init();
 	Scheme_Init();
+	gFlipScene.InitScreen();
 }
 
 
