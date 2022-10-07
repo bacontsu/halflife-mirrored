@@ -380,6 +380,7 @@ void CHud::Init()
 
 	MsgFunc_ResetHUD(0, 0, NULL);
 
+	/*
 	// check if the menu is already on fullscreen
 	auto brd_window = BRD_GetWindow();
 	if (brd_window)
@@ -389,6 +390,7 @@ void CHud::Init()
 			hasAlreadyFullscreen = true;
 		}
 	}
+	*/
 }
 
 // CHud destructor
@@ -477,7 +479,7 @@ void CHud::VidInit()
 	else
 		m_iRes = 640;
 
-
+	/*
 	auto brd_window = BRD_GetWindow();
 	if (brd_window)
 	{
@@ -495,6 +497,8 @@ void CHud::VidInit()
 		}
 	}
 
+	*/
+
 	if (CVAR_GET_FLOAT("r_borderless") == 1)
 	{
 		auto brd_window = BRD_GetWindow();
@@ -504,6 +508,7 @@ void CHud::VidInit()
 				BRD_SetBorderless(BRD_GetWindow());
 		}
 	}
+	
 
 	// Only load this once
 	if (!m_pSpriteList)

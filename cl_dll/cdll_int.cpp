@@ -123,6 +123,11 @@ int DLLEXPORT Initialize(cl_enginefunc_t* pEnginefuncs, int iVersion)
 	EV_HookEvents();
 	CL_LoadParticleMan();
 
+	// Overfloater - make sure we start with FBO / AA disabled
+	gEngfuncs.pfnClientCmd("_set_vid_level 1");
+	gEngfuncs.pfnClientCmd("_restart");
+
+
 	if (!FileSystem_LoadFileSystem())
 	{
 		return 0;
