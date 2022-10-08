@@ -20,6 +20,9 @@
 
 #include "particleman.h"
 #include "tri.h"
+
+#include "flipview.h"
+
 extern IParticleMan* g_pParticleMan;
 
 /*
@@ -47,6 +50,14 @@ Render any triangles with transparent rendermode needs here
 void DLLEXPORT HUD_DrawTransparentTriangles()
 {
 	//	RecClDrawTransparentTriangles();
+
+	static float oldtime;
+	if (oldtime == gEngfuncs.GetClientTime())
+	{
+		gFlipScene.DrawColorCor();
+	}
+	oldtime = gEngfuncs.GetClientTime();
+
 
 	if (g_pParticleMan)
 		g_pParticleMan->Update();

@@ -41,7 +41,6 @@ cl_enginefunc_t gEngfuncs;
 CHud gHUD;
 TeamFortressViewport* gViewPort = NULL;
 
-
 #include "particleman.h"
 IParticleMan* g_pParticleMan = nullptr;
 
