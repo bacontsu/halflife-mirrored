@@ -23,6 +23,7 @@
 
 #include "flipview.h"
 
+extern ref_params_s g_params;
 extern IParticleMan* g_pParticleMan;
 
 /*
@@ -51,12 +52,10 @@ void DLLEXPORT HUD_DrawTransparentTriangles()
 {
 	//	RecClDrawTransparentTriangles();
 
-	static float oldtime;
-	if (oldtime == gEngfuncs.GetClientTime())
+	if (g_params.paused != 0)
 	{
 		gFlipScene.DrawColorCor();
 	}
-	oldtime = gEngfuncs.GetClientTime();
 
 
 	if (g_pParticleMan)

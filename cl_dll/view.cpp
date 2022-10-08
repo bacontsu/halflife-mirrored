@@ -100,6 +100,8 @@ cvar_t v_ipitch_level = {"v_ipitch_level", "0.3", 0, 0.3};
 
 float v_idlescale; // used by TFC for concussion grenade effect
 
+ref_params_t g_params;
+
 //=============================================================================
 /*
 void V_NormalizeAngles( Vector& angles )
@@ -1638,6 +1640,8 @@ void DLLEXPORT V_CalcRefdef(struct ref_params_s* pparams)
 	{
 		V_CalcNormalRefdef(pparams);
 	}
+
+	memcpy(&g_params, pparams, sizeof(ref_params_t));
 
 	/*
 // Example of how to overlay the whole screen with red at 50 % alpha
