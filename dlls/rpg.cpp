@@ -429,7 +429,7 @@ void CRpg::PrimaryAttack()
 		m_pPlayer->SetAnimation(PLAYER_ATTACK1);
 
 		UTIL_MakeVectors(m_pPlayer->pev->v_angle);
-		Vector vecSrc = m_pPlayer->GetGunPosition() + gpGlobals->v_forward * 16 + gpGlobals->v_right * 8 + gpGlobals->v_up * -8;
+		Vector vecSrc = m_pPlayer->GetGunPosition() + gpGlobals->v_forward * 16 + gpGlobals->v_right * ((m_pPlayer->m_bRightHand) ? -8 : 8) + gpGlobals->v_up * -8;
 
 		CRpgRocket* pRocket = CRpgRocket::CreateRpgRocket(vecSrc, m_pPlayer->pev->v_angle, m_pPlayer, this);
 

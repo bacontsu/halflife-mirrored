@@ -26,6 +26,8 @@
 extern ref_params_s g_params;
 extern IParticleMan* g_pParticleMan;
 
+extern bool mouseactive;
+
 /*
 =================
 HUD_DrawNormalTriangles
@@ -52,7 +54,7 @@ void DLLEXPORT HUD_DrawTransparentTriangles()
 {
 	//	RecClDrawTransparentTriangles();
 
-	if (g_params.paused != 0)
+	if (g_params.paused != 0 || !mouseactive)
 	{
 		gFlipScene.DrawColorCor();
 	}

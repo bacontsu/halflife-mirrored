@@ -94,7 +94,7 @@ float mouse_x, mouse_y;
 
 static bool restore_spi;
 static int originalmouseparms[3], newmouseparms[3] = {0, 0, 1};
-static bool mouseactive = false;
+bool mouseactive = false;
 bool mouseinitialized;
 static bool mouseparmsvalid;
 static bool mouseshowtoggle = true;

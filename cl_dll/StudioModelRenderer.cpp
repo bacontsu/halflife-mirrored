@@ -58,6 +58,8 @@ void CStudioModelRenderer::Init()
 
 	IEngineStudio.GetModelCounters(&m_pStudioModelCount, &m_pModelsDrawn);
 
+	cl_righthand = CVAR_CREATE("cl_righthand", "1", FCVAR_ARCHIVE | FCVAR_USERINFO);
+
 	// Get pointers to engine data structures
 	m_pbonetransform = (float(*)[MAXSTUDIOBONES][3][4])IEngineStudio.StudioGetBoneTransform();
 	m_plighttransform = (float(*)[MAXSTUDIOBONES][3][4])IEngineStudio.StudioGetLightTransform();
@@ -563,7 +565,7 @@ void CStudioModelRenderer::StudioSetUpTransform(bool trivial_accept)
 
 	if (m_pCurrentEntity == gEngfuncs.GetViewModel())
 	{
-		if (CVAR_GET_FLOAT("cl_righthand") == 1)
+		if (cl_righthand->value == 1)
 		{
 			if (m_clTime != m_clOldTime)
 			{
@@ -1723,7 +1725,7 @@ void CStudioModelRenderer::StudioRenderFinal_Hardware()
 
 			if (m_pCurrentEntity == gEngfuncs.GetViewModel())
 			{
-				if (CVAR_GET_FLOAT("cl_righthand") == 0 && m_clTime == m_clOldTime)
+				if (cl_righthand->value == 0 && m_clTime == m_clOldTime)
 				{
 					gEngfuncs.pTriAPI->CullFace(TRI_NONE);
 				}
@@ -1733,7 +1735,7 @@ void CStudioModelRenderer::StudioRenderFinal_Hardware()
 
 			if (m_pCurrentEntity == gEngfuncs.GetViewModel())
 			{
-				if (CVAR_GET_FLOAT("cl_righthand") == 0 && m_clTime == m_clOldTime)
+				if (cl_righthand->value == 0 && m_clTime == m_clOldTime)
 				{
 					gEngfuncs.pTriAPI->CullFace(TRI_FRONT);
 				}
