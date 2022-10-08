@@ -15,6 +15,10 @@
 #include "Exports.h"
 
 #include "particleman.h"
+
+#include "PlatformHeaders.h"
+#include <gl/GL.h>
+
 extern IParticleMan* g_pParticleMan;
 
 void Game_AddObjects();
@@ -305,6 +309,9 @@ void DLLEXPORT HUD_CreateEntities()
 #if defined(BEAM_TEST)
 	Beams();
 #endif
+
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	// Add in any game specific objects
 	Game_AddObjects();
