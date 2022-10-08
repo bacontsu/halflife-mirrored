@@ -20,6 +20,11 @@
 
 #include "vgui_TeamFortressViewport.h"
 
+#include "flipview.h"
+
+#include "PlatformHeaders.h"
+#include <gl/GL.h>
+
 #define MAX_LOGO_FRAMES 56
 
 int grgLogoFrame[MAX_LOGO_FRAMES] =
@@ -92,6 +97,9 @@ void CHud::Think()
 // returns 1 if they've changed, 0 otherwise
 bool CHud::Redraw(float flTime, bool intermission)
 {
+	// BlueNightHawk - Flip the screen here so that sprites are also flipped
+	gFlipScene.DrawColorCor();
+
 	m_fOldTime = m_flTime; // save time of previous redraw
 	m_flTime = flTime;
 	m_flTimeDelta = (double)m_flTime - m_fOldTime;
@@ -137,6 +145,9 @@ bool CHud::Redraw(float flTime, bool intermission)
 	// if no redrawing is necessary
 	// return 0;
 
+	// BlueNightHawk - This fixes the viewmodel drawing on top of the hud
+	glDepthRange(0.0f, 0.0f);
+
 	// draw all registered HUD elements
 	if (0 != m_pCvarDraw->value)
 	{
@@ -158,7 +169,6 @@ bool CHud::Redraw(float flTime, bool intermission)
 			pList = pList->pNext;
 		}
 	}
-
 	// are we in demo mode? do we need to draw the logo in the top corner?
 	if (0 != m_iLogo)
 	{
@@ -179,6 +189,8 @@ bool CHud::Redraw(float flTime, bool intermission)
 
 		SPR_DrawAdditive(i, x, y, NULL);
 	}
+
+	glDepthRange(0.0f, 1.0f);
 
 	/*
 	if ( g_iVisibleMouse )

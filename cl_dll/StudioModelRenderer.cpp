@@ -1626,15 +1626,6 @@ void CStudioModelRenderer::StudioRenderModel()
 	{
 		StudioRenderFinal();
 	}
-
-	// Bacontsu - flip screen after drawing viewmodel, here (credit to Admer456, for this hackery to draw stuff(s) after the viewmodel)
-	if (m_pCurrentEntity == gEngfuncs.GetViewModel())
-	{
-		auto view = gEngfuncs.GetViewModel();
-
-		if (view && view->model)
-			gFlipScene.DrawColorCor();
-	}
 }
 
 /*

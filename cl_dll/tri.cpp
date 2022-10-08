@@ -20,7 +20,6 @@
 
 #include "particleman.h"
 #include "tri.h"
-#include "flipview.h"
 extern IParticleMan* g_pParticleMan;
 
 /*
@@ -49,13 +48,6 @@ void DLLEXPORT HUD_DrawTransparentTriangles()
 {
 	//	RecClDrawTransparentTriangles();
 
-	auto view = gEngfuncs.GetViewModel();
-
-	// Bacontsu - if viewmodel does not exist, flip the screen here (this is called before the viewmodel, anyways)
-	if (!(view && view->model))
-		gFlipScene.DrawColorCor();
-
 	if (g_pParticleMan)
 		g_pParticleMan->Update();
-
 }
