@@ -327,3 +327,8 @@ bool CHalfLifeRules::FAllowMonsters()
 {
 	return true;
 }
+
+void CHalfLifeRules::ClientUserInfoChanged(CBasePlayer* pPlayer, char* infobuffer)
+{
+	pPlayer->SetPrefsFromUserinfo(infobuffer);
+}

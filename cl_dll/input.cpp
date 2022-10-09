@@ -919,10 +919,10 @@ void InitInput()
 	gEngfuncs.pfnAddCommand("-moveup", IN_UpUp);
 	gEngfuncs.pfnAddCommand("+movedown", IN_DownDown);
 	gEngfuncs.pfnAddCommand("-movedown", IN_DownUp);
-	gEngfuncs.pfnAddCommand("+left", IN_LeftDown);
-	gEngfuncs.pfnAddCommand("-left", IN_LeftUp);
-	gEngfuncs.pfnAddCommand("+right", IN_RightDown);
-	gEngfuncs.pfnAddCommand("-right", IN_RightUp);
+	gEngfuncs.pfnAddCommand("+left", IN_RightDown);
+	gEngfuncs.pfnAddCommand("-left", IN_RightUp);
+	gEngfuncs.pfnAddCommand("+right", IN_LeftDown);
+	gEngfuncs.pfnAddCommand("-right", IN_LeftUp);
 	gEngfuncs.pfnAddCommand("+forward", IN_ForwardDown);
 	gEngfuncs.pfnAddCommand("-forward", IN_ForwardUp);
 	gEngfuncs.pfnAddCommand("+back", IN_BackDown);

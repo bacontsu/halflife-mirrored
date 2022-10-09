@@ -4735,6 +4735,17 @@ void CBasePlayer::SetPrefsFromUserinfo(char* infobuffer)
 	{
 		m_iAutoWepSwitch = 1;
 	}
+
+	const char* righthand = g_engfuncs.pfnInfoKeyValue(infobuffer, "cl_righthand");
+
+	if ('\0' != *righthand && gpGlobals->deathmatch == 0 && gpGlobals->maxClients == 1)
+	{
+		m_bRightHand = (atoi(righthand) == 0) ? false : true;
+	}
+	else
+	{
+		m_bRightHand = true;
+	}
 }
 
 //=========================================================

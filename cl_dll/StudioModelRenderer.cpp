@@ -58,6 +58,8 @@ void CStudioModelRenderer::Init()
 
 	IEngineStudio.GetModelCounters(&m_pStudioModelCount, &m_pModelsDrawn);
 
+	cl_righthand = CVAR_CREATE("cl_righthand", "1", FCVAR_ARCHIVE | FCVAR_USERINFO);
+
 	// Get pointers to engine data structures
 	m_pbonetransform = (float(*)[MAXSTUDIOBONES][3][4])IEngineStudio.StudioGetBoneTransform();
 	m_plighttransform = (float(*)[MAXSTUDIOBONES][3][4])IEngineStudio.StudioGetLightTransform();
@@ -561,11 +563,23 @@ void CStudioModelRenderer::StudioSetUpTransform(bool trivial_accept)
 	(*m_protationmatrix)[1][3] = modelpos[1];
 	(*m_protationmatrix)[2][3] = modelpos[2];
 
-	if (CVAR_GET_FLOAT("cl_righthand") == 1 && m_pCurrentEntity == gEngfuncs.GetViewModel())
+	if (m_pCurrentEntity == gEngfuncs.GetViewModel())
 	{
-		(*m_protationmatrix)[0][1] *= -1;
-		(*m_protationmatrix)[1][1] *= -1;
-		(*m_protationmatrix)[2][1] *= -1;
+		if (cl_righthand->value == 1)
+		{
+			if (m_clTime != m_clOldTime)
+			{
+				(*m_protationmatrix)[0][1] *= -1;
+				(*m_protationmatrix)[1][1] *= -1;
+				(*m_protationmatrix)[2][1] *= -1;
+			}
+		}
+		else if (m_clTime == m_clOldTime)
+		{
+			(*m_protationmatrix)[0][1] *= -1;
+			(*m_protationmatrix)[1][1] *= -1;
+			(*m_protationmatrix)[2][1] *= -1;
+		}
 	}
 }
 
@@ -1708,7 +1722,25 @@ void CStudioModelRenderer::StudioRenderFinal_Hardware()
 			}
 
 			IEngineStudio.GL_SetRenderMode(rendermode);
+
+			if (m_pCurrentEntity == gEngfuncs.GetViewModel())
+			{
+				if (cl_righthand->value == 0 && m_clTime == m_clOldTime)
+				{
+					gEngfuncs.pTriAPI->CullFace(TRI_NONE);
+				}
+			}
+
 			IEngineStudio.StudioDrawPoints();
+
+			if (m_pCurrentEntity == gEngfuncs.GetViewModel())
+			{
+				if (cl_righthand->value == 0 && m_clTime == m_clOldTime)
+				{
+					gEngfuncs.pTriAPI->CullFace(TRI_FRONT);
+				}
+			}
+
 			IEngineStudio.GL_StudioDrawShadow();
 		}
 	}

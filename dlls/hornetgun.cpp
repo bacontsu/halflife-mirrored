@@ -122,7 +122,7 @@ void CHgun::PrimaryAttack()
 #ifndef CLIENT_DLL
 	UTIL_MakeVectors(m_pPlayer->pev->v_angle);
 
-	CBaseEntity* pHornet = CBaseEntity::Create("hornet", m_pPlayer->GetGunPosition() + gpGlobals->v_forward * 16 + gpGlobals->v_right * 8 + gpGlobals->v_up * -12, m_pPlayer->pev->v_angle, m_pPlayer->edict());
+	CBaseEntity* pHornet = CBaseEntity::Create("hornet", m_pPlayer->GetGunPosition() + gpGlobals->v_forward * 16 + gpGlobals->v_right * ((m_pPlayer->m_bRightHand) ? -8 : 8) + gpGlobals->v_up * -12, m_pPlayer->pev->v_angle, m_pPlayer->edict());
 	pHornet->pev->velocity = gpGlobals->v_forward * 300;
 
 	m_flRechargeTime = gpGlobals->time + 0.5;
@@ -176,7 +176,7 @@ void CHgun::SecondaryAttack()
 
 	UTIL_MakeVectors(m_pPlayer->pev->v_angle);
 
-	vecSrc = m_pPlayer->GetGunPosition() + gpGlobals->v_forward * 16 + gpGlobals->v_right * 8 + gpGlobals->v_up * -12;
+	vecSrc = m_pPlayer->GetGunPosition() + gpGlobals->v_forward * 16 + gpGlobals->v_right * ((m_pPlayer->m_bRightHand) ? -8 : 8) + gpGlobals->v_up * -12;
 
 	m_iFirePhase++;
 	switch (m_iFirePhase)
@@ -186,28 +186,28 @@ void CHgun::SecondaryAttack()
 		break;
 	case 2:
 		vecSrc = vecSrc + gpGlobals->v_up * 8;
-		vecSrc = vecSrc + gpGlobals->v_right * 8;
+		vecSrc = vecSrc + gpGlobals->v_right * ((m_pPlayer->m_bRightHand) ? -8 : 8);
 		break;
 	case 3:
-		vecSrc = vecSrc + gpGlobals->v_right * 8;
+		vecSrc = vecSrc + gpGlobals->v_right * ((m_pPlayer->m_bRightHand) ? -8 : 8);
 		break;
 	case 4:
 		vecSrc = vecSrc + gpGlobals->v_up * -8;
-		vecSrc = vecSrc + gpGlobals->v_right * 8;
+		vecSrc = vecSrc + gpGlobals->v_right * ((m_pPlayer->m_bRightHand) ? -8 : 8);
 		break;
 	case 5:
 		vecSrc = vecSrc + gpGlobals->v_up * -8;
 		break;
 	case 6:
 		vecSrc = vecSrc + gpGlobals->v_up * -8;
-		vecSrc = vecSrc + gpGlobals->v_right * -8;
+		vecSrc = vecSrc + gpGlobals->v_right * ((m_pPlayer->m_bRightHand) ? 8 : -8);
 		break;
 	case 7:
-		vecSrc = vecSrc + gpGlobals->v_right * -8;
+		vecSrc = vecSrc + gpGlobals->v_right * ((m_pPlayer->m_bRightHand) ? 8 : -8);
 		break;
 	case 8:
 		vecSrc = vecSrc + gpGlobals->v_up * 8;
-		vecSrc = vecSrc + gpGlobals->v_right * -8;
+		vecSrc = vecSrc + gpGlobals->v_right * ((m_pPlayer->m_bRightHand) ? 8 : -8);
 		m_iFirePhase = 0;
 		break;
 	}

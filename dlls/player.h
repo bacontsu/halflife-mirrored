@@ -355,6 +355,8 @@ public:
 
 	//True if the player is currently spawning.
 	bool m_bIsSpawning = false;
+
+	bool m_bRightHand = true;
 };
 
 inline void CBasePlayer::SetWeaponBit(int id)
